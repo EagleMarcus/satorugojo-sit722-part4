@@ -1,1 +1,31 @@
 # Your Solution
+
+services:
+  book_catalog:
+    build:
+      context: ./book_catalog/
+      dockerfile: Dockerfile
+    ports:
+      - "5051:5051"
+    environment:
+      - DATABASE_URL=postgresql://dbassignment8_2_9evc_user:IXWx4W0VoIeziOTH4ttUGzM3pkFLziME@dpg-crpd2o2j1k6c73c41kp0-a.oregon-postgres.render.com/dbassignment8_2_9evc
+
+    depends_on:
+      - db
+
+  inventory_management:
+    build:
+      context: ./inventory_management/
+      dockerfile: Dockerfile
+    ports:
+      - "5052:5052"
+    environment:
+      - DATABASE_URL=postgresql://dbassignment8_2_9evc_user:IXWx4W0VoIeziOTH4ttUGzM3pkFLziME@dpg-crpd2o2j1k6c73c41kp0-a.oregon-postgres.render.com/dbassignment8_2_9evc
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: dbassignment8_2_9evc_user
+      POSTGRES_PASSWORD: IXWx4W0VoIeziOTH4ttUGzM3pkFLziME
+      POSTGRES_DB: dbassignment8_2_9evc
+    ports:
+      - "5432:5432"
